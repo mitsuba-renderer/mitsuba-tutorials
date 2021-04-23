@@ -1,5 +1,13 @@
 .ipynb_checkpoints
+
+# Exclude files produced by the notebooks
 *.exr
 *.png
 *.jpg
 *.ply
+
+# Add back the files related to the scene data
+!scenes/meshes/*.ply
+!scenes/textures/*.exr
+!scenes/textures/*.png
+!scenes/textures/*.jpg
