@@ -1,8 +1,9 @@
 <scene version="2.0.0">
     <default name="spp" value="128"/>
     <default name="res" value="256"/>
+    <default name="integrator" value="path"/>
 
-    <integrator type='path'/>
+    <integrator type='$integrator'/>
 
     <sensor type="perspective" id="sensor">
         <string name="fov_axis" value="smaller"/>
@@ -33,14 +34,6 @@
 
     <bsdf type="diffuse" id="white">
         <rgb name="reflectance" value="0.885809, 0.698859, 0.666422"/>
-    </bsdf>
-
-    <bsdf type="diffuse" id="red">
-        <rgb name="reflectance" value="0.570068, 0.0430135, 0.0443706"/>
-    </bsdf>
-
-    <bsdf type="diffuse" id="green">
-        <rgb name="reflectance" value="0.105421, 0.37798, 0.076425"/>
     </bsdf>
 
     <!-- Light -->
@@ -75,12 +68,16 @@
 
     <shape type="obj" id="greenwall">
         <string name="filename" value="meshes/cbox_greenwall.obj"/>
-        <ref id="green"/>
+        <bsdf type="diffuse">
+            <rgb name="reflectance" value="0.105421, 0.37798, 0.076425"/>
+        </bsdf>
     </shape>
 
     <shape type="obj" id="redwall">
         <string name="filename" value="meshes/cbox_redwall.obj"/>
-        <ref id="red"/>
+        <bsdf type="diffuse">
+            <rgb name="reflectance" value="0.570068, 0.0430135, 0.0443706"/>
+        </bsdf>
     </shape>
 
     <shape type="obj" id="smallbox">
