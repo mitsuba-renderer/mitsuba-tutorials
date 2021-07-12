@@ -1,9 +1,10 @@
-<scene version="2.0.0">
+<scene version="2.2.1">
     <default name="spp" value="128"/>
     <default name="res" value="256"/>
     <default name="max_depth" value="8"/>
+    <default name="integrator" value="path"/>
 
-    <integrator type='path'>
+    <integrator type='$integrator'>
         <integer name="max_depth" value="$max_depth"/>
     </integrator>
 
@@ -24,7 +25,8 @@
         <film type="hdrfilm">
             <integer name="width"  value="$res"/>
             <integer name="height" value="$res"/>
-            <rfilter type="gaussian"/>
+            <rfilter type="box"/>
+            <string name="pixel_format" value="rgb"/>
         </film>
     </sensor>
 
