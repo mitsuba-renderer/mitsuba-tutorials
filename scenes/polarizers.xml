@@ -1,0 +1,60 @@
+<scene version='2.0.0'>
+    <default name="spp" value="10"/>
+    <default name="res" value="128"/>
+
+    <integrator type='path'/>
+
+    <sensor type="perspective">
+        <float name="fov" value="80"/>
+        <transform name="to_world">
+            <lookat target="0.0, 0.0, 0"
+                    origin="0.0, 0, -5.0"
+                    up    ="0.0, 1.0, 0.0"/>
+        </transform>
+
+        <sampler type="independent">
+            <integer name="sample_count" value="$spp"/>
+        </sampler>
+        <film type="hdrfilm">
+            <rfilter type="box"/>
+            <integer name="width"  value="$res"/>
+            <integer name="height" value="$res"/>
+        </film>
+    </sensor>
+
+<!--     <shape type="ply" id="teapot">
+        <string name="filename" value="meshes/teapot.ply"/>
+        <bsdf type="diffuse">
+            <rgb name="reflectance" value="0.9 0.9 0.0"/>
+        </bsdf>
+    </shape> -->
+
+    <shape type="obj" id="filter1">
+        <string name="filename" value="meshes/rectangle_pol.obj"/>
+        <bsdf type="polarizer"/>
+
+        <transform name="to_world">
+            <scale value="3.2"/>
+        </transform>
+    </shape>
+
+    <shape type="obj" id="filter2">
+        <string name="filename" value="meshes/rectangle_pol.obj"/>
+        <bsdf type="polarizer">
+            <spectrum name="theta" value="0"/>
+        </bsdf>
+
+        <transform name="to_world">
+            <translate z="0.5"/>
+            <scale value="3.2"/>
+            <rotate z="1" angle="1"/>
+        </transform>
+    </shape>
+
+    <emitter type="envmap">
+        <string name="filename" value="textures/envmap.exr"/>
+        <transform name="to_world">
+            <rotate y="1" angle="270"/>
+        </transform>
+    </emitter>
+</scene>

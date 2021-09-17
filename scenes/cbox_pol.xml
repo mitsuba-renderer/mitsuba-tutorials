@@ -1,0 +1,114 @@
+<scene version="2.0.0">
+    <default name="spp" value="512"/>
+    <default name="res" value="256"/>
+
+    <integrator type="stokes">
+        <integrator type='path'/>
+    </integrator>
+
+    <sensor type="perspective" id="sensor">
+        <string name="fov_axis" value="smaller"/>
+        <float name="near_clip" value="10"/>
+        <float name="far_clip" value="2800"/>
+        <float name="focus_distance" value="1000"/>
+        <float name="fov" value="39.3077"/>
+        <transform name="to_world">
+            <lookat origin="278, 273, -800"
+                    target="278, 273, -799"
+                    up    ="  0,   1,    0"/>
+        </transform>
+        <sampler type="independent">
+            <integer name="sample_count" value="$spp"/>
+        </sampler>
+        <film type="hdrfilm">
+            <integer name="width"  value="$res"/>
+            <integer name="height" value="$res"/>
+            <rfilter type="gaussian"/>
+        </film>
+    </sensor>
+
+    <!-- BSDFs -->
+
+    <bsdf type="dielectric" id="glass"/>
+
+    <bsdf type="conductor" id="metal">
+        <spectrum name="eta" value="0.24873"/>
+        <spectrum name="k"   value="0.30740"/>
+    </bsdf>
+
+    <bsdf type="diffuse" id="gray">
+        <rgb name="reflectance" value="0.85, 0.85, 0.85"/>
+    </bsdf>
+
+    <bsdf type="diffuse" id="white">
+        <rgb name="reflectance" value="0.8"/>
+    </bsdf>
+
+    <!-- Light -->
+
+    <shape type="obj" id="light">
+        <string name="filename" value="meshes/cbox_luminaire.obj"/>
+        <transform name="to_world">
+            <translate x="0" y="-0.5" z="0"/>
+        </transform>
+        <ref id="white"/>
+        <emitter type="area">
+            <rgb name="radiance" value="25.0"/>
+        </emitter>
+    </shape>
+
+    <!-- Shapes -->
+
+    <shape type="obj" id="floor">
+        <string name="filename" value="meshes/cbox_floor.obj"/>
+        <ref id="white"/>
+    </shape>
+
+    <shape type="obj" id="ceiling">
+        <string name="filename" value="meshes/cbox_ceiling.obj"/>
+        <ref id="white"/>
+    </shape>
+
+    <shape type="obj" id="back">
+        <string name="filename" value="meshes/cbox_back.obj"/>
+        <ref id="white"/>
+    </shape>
+
+    <shape type="obj" id="greenwall">
+        <string name="filename" value="meshes/cbox_greenwall.obj"/>
+        <bsdf type="diffuse">
+            <rgb name="reflectance" value="0.4"/>
+        </bsdf>
+    </shape>
+
+    <shape type="obj" id="redwall">
+        <string name="filename" value="meshes/cbox_redwall.obj"/>
+        <bsdf type="diffuse">
+            <rgb name="reflectance" value="0.2"/>
+        </bsdf>
+    </shape>
+
+    <shape type="sphere">
+        <ref id="glass"/>
+        <point name="center" value="425.98, 125.46, 264.19"/>
+        <float name="radius" value="125"/>
+    </shape>
+
+    <shape type="sphere">
+        <ref id="glass"/>
+        <point name="center" value="125.46, 425.98, 264.19"/>
+        <float name="radius" value="125"/>
+    </shape>
+
+    <shape type="sphere">
+        <ref id="metal"/>
+        <point name="center" value="425.98, 425.98, 264.19"/>
+        <float name="radius" value="125"/>
+    </shape>
+
+    <shape type="sphere">
+        <ref id="metal"/>
+        <point name="center" value="125.46, 125.46, 264.19"/>
+        <float name="radius" value="125"/>
+    </shape>
+</scene>
