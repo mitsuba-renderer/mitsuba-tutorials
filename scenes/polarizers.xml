@@ -1,4 +1,4 @@
-<scene version='2.0.0'>
+<scene version='3.0.0'>
     <default name="spp" value="10"/>
     <default name="res" value="128"/>
 
