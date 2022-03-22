@@ -11,3 +11,6 @@
 !scenes/textures/*.exr
 !scenes/textures/*.png
 !scenes/textures/*.jpg
+
+# macOS
+\.DS_Store
