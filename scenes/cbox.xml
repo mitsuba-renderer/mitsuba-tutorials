@@ -27,6 +27,7 @@
             <integer name="height" value="$res"/>
             <rfilter type="tent"/>
             <string name="pixel_format" value="rgb"/>
+            <string name="component_format" value="float32"/>
         </film>
     </sensor>
 
