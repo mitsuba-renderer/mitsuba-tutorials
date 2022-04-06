@@ -16,18 +16,11 @@
             <integer name="sample_count" value="$spp"/>
         </sampler>
         <film type="hdrfilm">
-            <rfilter type="box"/>
+            <rfilter type="tent"/>
             <integer name="width"  value="$res"/>
             <integer name="height" value="$res"/>
         </film>
     </sensor>
-
-<!--     <shape type="ply" id="teapot">
-        <string name="filename" value="meshes/teapot.ply"/>
-        <bsdf type="diffuse">
-            <rgb name="reflectance" value="0.9 0.9 0.0"/>
-        </bsdf>
-    </shape> -->
 
     <shape type="obj" id="filter1">
         <string name="filename" value="meshes/rectangle_pol.obj"/>
