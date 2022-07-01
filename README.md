@@ -1,11 +1,11 @@
-# Mitsuba 2 Tutorials
+# Mitsuba 3 tutorials
 
-> :warning: **WARNING**: These tutorials are designed for an as-of-yet unreleased version of the Mitsuba 2 codebase. They will *not* work with the current version of the renderer.
+> :warning: **Warning**: these tutorials are designed for an as-of-yet unreleased version of the Mitsuba codebase. They will *not* work with Mitsuba 2, the currently released version as of June 2022.
 
-This repository contains Mitsuba 2 tutorials in the form of interactive Jupyter
+This repository contains Mitsuba 3 tutorials in the form of interactive Jupyter
 notebooks. Amongst other things, they explain how to
 
-- invoke the renderer from Python.
-- programmatically construct scenes.
-- account for polarization effects in simulations.
-- conduct differentiable and inverse rendering.
+- Invoke the renderer from Python.
+- Programmatically construct scenes.
+- Account for polarization effects in simulations.
+- Conduct differentiable and inverse rendering.
