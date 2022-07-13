@@ -1,0 +1,1860 @@
+<scene version="3.0.0">
+
+<!-- Defaults, these can be set via the command line: -Darg=value -->
+
+	<default name="spp" value="64"/>
+	<default name="resx" value="512"/>
+	<default name="resy" value="512"/>
+	<default name="max_depth" value="8"/>
+	<default name="pixel_format" value="rgb"/>
+
+<!-- Camera and Rendering Parameters -->
+
+	<integrator type="path">
+		<integer name="max_depth" value="$max_depth"/>
+		<boolean name="hide_emitters" value="true"/>
+	</integrator>
+
+	<sensor type="perspective">
+		<float name="fov" value="39"/>
+		<transform name="to_world">
+			<lookat origin="-1.2, 0.5, 1.2"
+                    target="0.4, 0.45, 0.5"
+                    up="0, 1, 0"/>
+		</transform>
+
+		<sampler type="independent">
+		    <integer name="sample_count" value="$spp"/>
+        </sampler>
+
+        <film type="hdrfilm">
+            <integer name="width" value="$resx"/>
+            <integer name="height" value="$resy"/>
+            <string name="pixel_format" value="$pixel_format"/>
+            <rfilter type="gaussian"/>
+        </film>
+	</sensor>
+
+	<emitter type="envmap">
+		<string name="filename" value="textures/cathedral.hdr" />
+		<float name="scale" value="0.5"/>
+        <transform name="to_world">
+            <rotate x="0.0" y="1.0" z="0.0" angle="20"/>
+        </transform>
+	</emitter>
+
+<!-- Materials -->
+
+	<bsdf type="diffuse"  id="main-bsdf">
+        <texture type="volume" name="reflectance">
+            <volume type="gridvolume" name="volume">
+                <string name="filename" value="textures/red.vol"/>
+            </volume>
+        </texture>
+	</bsdf>
+
+	<bsdf type="diffuse" id="empty-emitter-bsdf">
+		<rgb value="0.000000" name="reflectance"/>
+	</bsdf>
+	<bsdf type="twosided" id="mat-Gray">
+		<bsdf type="diffuse">
+			<rgb value="0.296138 0.323143 0.391572" name="reflectance"/>
+		</bsdf>
+	</bsdf>
+	<bsdf type="twosided" id="mat-transparent">
+		<bsdf type="diffuse">
+			<rgb value="0.162644 0.162644 0.162644" name="reflectance"/>
+		</bsdf>
+	</bsdf>
+	<bsdf type="twosided" id="mat-Black">
+		<bsdf type="diffuse">
+			<rgb value="0.002808 0.002808 0.002808" name="reflectance"/>
+		</bsdf>
+	</bsdf>
+	<bsdf type="twosided" id="mat-Red_Glass">
+		<bsdf type="diffuse">
+			<rgb value="1.000000 0.015209 0.003347" name="reflectance"/>
+		</bsdf>
+	</bsdf>
+	<bsdf type="twosided" id="mat-Yellow">
+		<bsdf type="diffuse">
+			<rgb value="0.799103 0.502886 0.029557" name="reflectance"/>
+		</bsdf>
+	</bsdf>
+	<bsdf type="diffuse" id="mat-RubberBand">
+		<rgb value="1.000000 0.000000 0.300000" name="reflectance"/>
+	</bsdf>
+	<bsdf type="twosided" id="mat-Sand">
+		<bsdf type="diffuse">
+			<rgb value="0.529543 0.435094 0.248232" name="reflectance"/>
+		</bsdf>
+	</bsdf>
+	<bsdf type="twosided" id="mat-Light_brown">
+		<bsdf type="diffuse">
+			<rgb value="0.201102 0.079997 0.034288" name="reflectance"/>
+		</bsdf>
+	</bsdf>
+	<bsdf type="twosided" id="mat-Brown">
+		<bsdf type="diffuse">
+			<rgb value="0.097587 0.040915 0.020289" name="reflectance"/>
+		</bsdf>
+	</bsdf>
+
+	<shape type="ply">
+		<string name="filename" value="meshes/PinTransitionConnector_01_02_002.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinTransitionConnector_01_02_001.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinTransitionConnector_01_02_003.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinTransitionConnector_01_02_004.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_02_transparent_002.ply"/>
+		<ref id="mat-transparent" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_02_black_007.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_02_black_006.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_02_transparent_001.ply"/>
+		<ref id="mat-transparent" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_01_purple_002.ply"/>
+		<ref id="mat-Red_Glass" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_01_purple_001.ply"/>
+		<ref id="mat-Red_Glass" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_round_01_01_purple_glass_001.ply"/>
+		<ref id="mat-Red_Glass" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_02_04_003.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_02_04_002.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_04_06_002.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_08_004.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_08_003.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_02_02_003.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_02_03_001.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_round_01_01_black_003.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_round_01_01_black_002.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_04_06_001.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_round_01_01_black_001.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_08_002.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_04_004.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_01_02_011.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_01_02_010.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_02_008.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_02_007.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_02_006.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_02_005.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/TechnicConnector_01_02_008.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/TechnicConnector_01_02_007.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Technic_axle_6_004.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_08_010.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Technic_axle_6_003.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/TechnicConnector_01_02_006.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/TechnicConnector_01_02_005.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Technic_axle_8_003.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/TechnicBush_01_01_009.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/TechnicBush_01_01_008.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_022.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_021.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_020.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_019.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_018.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_017.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_016.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_015.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_08_009.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_02_004.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_014.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_08_008.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_08_007.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_013.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_02_003.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_04_001.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_08_006.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_08_005.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_012.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_011.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_010.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_009.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_04_002.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_04_001.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_06_004.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_16_006.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_06_003.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_16_005.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_008.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_007.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_02_gray_002.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_02_black_005.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_02_black_004.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_04_gray_004.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_04_gray_003.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_02_black_003.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_02_black_002.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_04_gray_002.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_02_gray_001.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_04_gray_001.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_02_black_001.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_01_04_004.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_01_02_004.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_01_02_007.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_01_02_006.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_01_02_005.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_01_02_004.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_01_02_003.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_01_02_002.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_01_02_003.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_01_04_003.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_04_10_002.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_01_04_002.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_01_06_004.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_02_02_002.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_01_06_003.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_01_04_001.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_06_001.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_01_06_002.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_02_06_002.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_02_06_001.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_01_06_001.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_06_002.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_08_001.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_08_004.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_08_003.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_08_002.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_02_02_001.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_02_02_007.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_02_04_001.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_02_02_006.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_02_02_005.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_02_02_004.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_02_02_003.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_02_02_002.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_01_02_002.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_01_08_002.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_01_08_001.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/SlopeBrickInverted_02_02_003.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/SlopeBrickInverted_02_02_002.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_02_02_001.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_01_02_001.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_01_02_001.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/SlopeBrickInverted_02_02_001.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_06_10_002.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_06_10_001.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/TechnicBush_01_01_004.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Technic_axle_12_002.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/TechnicBush_01_01_003.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_04_10_001.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/TechnicBush_01_01_002.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Technic_axle_12_001.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/TechnicBush_01_01_001.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_002.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_001.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_16_004.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_16_003.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_16_002.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_16_001.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/TechnicBush_01_01_007.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/TechnicBush_01_01_006.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Technic_axle_8_002.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/RubberBand_Left_001.ply"/>
+		<ref id="mat-RubberBand" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/RubberBand_Left.ply"/>
+		<ref id="mat-RubberBand" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_04_007.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_04_006.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_04_005.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_04_004.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_04_003.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_04_12_002.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_04_12_001.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/TipperEnd_002.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/TipperEnd_001.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_04_002.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_02_06_004.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_02_06_003.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_02_04_004.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_02_002.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_02_001.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_02_010.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_030.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_029.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_02_009.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/TechnicConnector_01_02_002.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/TechnicConnector_01_02_001.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/TechnicBush_01_01_011.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/TechnicBush_01_01_010.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Technic_axle_8_004.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_038.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_037.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/TechnicConnector_01_02_024.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/TechnicConnector_01_02_023.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Technic_axle_4_011.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Technic_axle_4_010.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/TechnicConnector_01_02_022.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/TechnicConnector_01_02_021.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_06_008.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_06_007.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_034.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_033.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_036.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/TechnicConnector_01_02_020.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/TechnicConnector_01_02_019.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Technic_axle_4_009.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_035.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Technic_axle_4_008.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/TechnicConnector_01_02_018.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/TechnicConnector_01_02_017.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_032.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_031.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_08_005.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_04_005.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_01_02_013.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/GearRack_01_04_007.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_01_02_012.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_01_02_009.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/GearRack_01_04_005.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_01_02_008.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_04_003.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_08_001.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_06_006.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_08_006.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_06_005.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_12_002.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_040.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_12_001.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_039.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_024.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_023.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/TechnicConnector_01_02_012.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/TechnicConnector_01_02_011.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Technic_axle_4_007.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Technic_axle_4_006.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/TechnicConnector_01_02_010.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/TechnicConnector_01_02_009.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_004.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_003.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_028.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_027.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_026.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_025.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/TechnicConnector_01_02_016.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/TechnicConnector_01_02_015.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Technic_axle_6_006.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Technic_axle_6_005.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/TechnicConnector_01_02_014.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/TechnicConnector_01_02_013.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_02_02_003.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_02_08_001.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_02_02_008.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_02_02_002.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/GearRack_01_04_004.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/GearRack_01_04_003.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/GearRack_01_04_002.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/GearRack_01_04_001.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_02_02_001.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_02_002.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_m_hole_01_02_001.ply"/>
+		<ref id="mat-Yellow" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/TechnicPulleyLarge_001.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Gear_08_Teeth_001.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Technic_axle_4_001.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_005.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Technic_axle_4_005.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Gear_24_Teeth_rounded_002.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Gear_08_Teeth_007.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/TechnicBush_01_01_005.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Gear_08_Teeth_005.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Technic_axle_10_001.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Gear_24_Teeth_003.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/PinSmoothWithoutFrictionRidges_01_02_006.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Technic_axle_4_002.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Gear_08_Teeth_002.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/TechnicPulleyLarge_002.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Gear_24_Teeth_rounded_001.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Technic_axle_4_003.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Gear_08_Teeth_006.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Technic_axle_8_001.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Gear_24_Teeth_002.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Gear_08_Teeth_003.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Technic_axle_6_001.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Gear_24_Teeth_001.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Gear_08_Teeth_004.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Gear_40_TeethLeftF.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_052.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_051.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_050.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_049.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_048.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_047.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_046.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_045.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_044.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_043.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_042.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_041.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_040.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_039.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_038.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_037.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_036.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_035.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_034.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_033.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_032.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_031.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_030.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_029.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_028.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_027.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_026.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_025.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_024.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_023.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_022.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_021.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_020.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_019.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_018.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_017.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_016.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_015.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_014.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_013.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_012.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_011.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_010.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_009.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_008.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_007.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_006.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_005.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_004.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_003.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_002.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_001.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_000.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Gear_40_TeethLeftB.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_105.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_104.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_103.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_102.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_101.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_100.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_099.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_098.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_097.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_096.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_095.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_094.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_093.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_092.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_091.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_090.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_089.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_088.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_087.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_086.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_085.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_084.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_083.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_082.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_081.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_080.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_079.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_078.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_077.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_076.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_075.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_074.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_073.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_072.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_071.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_070.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_069.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_068.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_067.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_066.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_065.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_064.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_063.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_062.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_061.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_060.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_059.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_058.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_057.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_056.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_055.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_054.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/ChainTreadLeft_053.ply"/>
+		<ref id="mat-Black" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Gear_40_TeethRightB.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Gear_40_TeethRightF.ply"/>
+		<ref id="mat-Gray" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/LegoPlane_huge.ply"/>
+		<ref id="mat-Sand" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_01_02_038.ply"/>
+		<ref id="mat-Sand" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_08_022.ply"/>
+		<ref id="mat-Light_brown" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_04_011.ply"/>
+		<ref id="mat-Brown" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_08_021.ply"/>
+		<ref id="mat-Brown" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_08_020.ply"/>
+		<ref id="mat-Brown" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_08_019.ply"/>
+		<ref id="mat-Brown" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_08_018.ply"/>
+		<ref id="mat-Brown" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_08_017.ply"/>
+		<ref id="mat-Light_brown" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_04_010.ply"/>
+		<ref id="mat-Light_brown" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_01_02_037.ply"/>
+		<ref id="mat-Brown" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_02_006.ply"/>
+		<ref id="mat-Light_brown" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_08_016.ply"/>
+		<ref id="mat-Brown" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_02_003.ply"/>
+		<ref id="mat-Light_brown" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_01_02_036.ply"/>
+		<ref id="mat-Brown" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_01_02_035.ply"/>
+		<ref id="mat-Brown" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_01_02_034.ply"/>
+		<ref id="mat-Light_brown" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_01_02_033.ply"/>
+		<ref id="mat-Light_brown" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_08_015.ply"/>
+		<ref id="mat-Brown" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_01_02_032.ply"/>
+		<ref id="mat-Brown" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_01_02_031.ply"/>
+		<ref id="mat-Brown" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_01_02_030.ply"/>
+		<ref id="mat-Sand" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_01_02_029.ply"/>
+		<ref id="mat-Sand" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_01_02_028.ply"/>
+		<ref id="mat-Sand" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_01_02_027.ply"/>
+		<ref id="mat-Sand" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_01_02_026.ply"/>
+		<ref id="mat-Sand" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_01_02_025.ply"/>
+		<ref id="mat-Sand" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_01_02_024.ply"/>
+		<ref id="mat-Sand" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_01_02_023.ply"/>
+		<ref id="mat-Sand" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_02_08_004.ply"/>
+		<ref id="mat-Sand" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_02_08_003.ply"/>
+		<ref id="mat-Sand" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_02_06_006.ply"/>
+		<ref id="mat-Sand" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_02_06_005.ply"/>
+		<ref id="mat-Sand" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_01_02_022.ply"/>
+		<ref id="mat-Sand" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_01_02_021.ply"/>
+		<ref id="mat-Brown" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_01_02_020.ply"/>
+		<ref id="mat-Brown" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_08_014.ply"/>
+		<ref id="mat-Brown" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_01_02_019.ply"/>
+		<ref id="mat-Light_brown" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_01_02_018.ply"/>
+		<ref id="mat-Light_brown" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_01_02_017.ply"/>
+		<ref id="mat-Brown" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_01_02_016.ply"/>
+		<ref id="mat-Brown" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_02_005.ply"/>
+		<ref id="mat-Light_brown" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_08_013.ply"/>
+		<ref id="mat-Brown" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_02_004.ply"/>
+		<ref id="mat-Light_brown" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_01_02_015.ply"/>
+		<ref id="mat-Brown" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_04_009.ply"/>
+		<ref id="mat-Light_brown" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_08_012.ply"/>
+		<ref id="mat-Light_brown" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_08_011.ply"/>
+		<ref id="mat-Brown" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_08_010.ply"/>
+		<ref id="mat-Light_brown" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_08_009.ply"/>
+		<ref id="mat-Brown" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_08_008.ply"/>
+		<ref id="mat-Brown" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_04_008.ply"/>
+		<ref id="mat-Brown" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_01_08_007.ply"/>
+		<ref id="mat-Light_brown" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_m_flatTop_01_02_014.ply"/>
+		<ref id="mat-Sand" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_02_08_002.ply"/>
+		<ref id="mat-Sand" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_06_10_014.ply"/>
+		<ref id="mat-Sand" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_06_10_013.ply"/>
+		<ref id="mat-Sand" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_06_10_012.ply"/>
+		<ref id="mat-Sand" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_06_10_011.ply"/>
+		<ref id="mat-Sand" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_06_10_010.ply"/>
+		<ref id="mat-Sand" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_06_10_009.ply"/>
+		<ref id="mat-Sand" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_06_10_008.ply"/>
+		<ref id="mat-Sand" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_06_10_007.ply"/>
+		<ref id="mat-Sand" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_06_10_006.ply"/>
+		<ref id="mat-Sand" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_06_10_005.ply"/>
+		<ref id="mat-Sand" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_06_10_004.ply"/>
+		<ref id="mat-Sand" name="bsdf"/>
+	</shape>
+	<shape type="ply">
+		<string name="filename" value="meshes/Brick_flat_06_10_003.ply"/>
+		<ref id="mat-Sand" name="bsdf"/>
+	</shape>
+
+</scene>
