@@ -7,10 +7,10 @@
 *.ply
 
 # Add back the files related to the scene data
-!scenes/*.exr
-!scenes/*.png
-!scenes/*.jpg
-!scenes/*.ply
+!scenes/textures/*.exr
+!scenes/textures/*.png
+!scenes/textures/*.jpg
+!scenes/meshes/*.ply
 
 # macOS
 \.DS_Store
