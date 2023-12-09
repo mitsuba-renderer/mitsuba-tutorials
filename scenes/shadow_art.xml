@@ -1,0 +1,66 @@
+<scene version="2.1.0">
+
+<!-- Defaults, these can be set via the command line: -Darg=value -->
+
+	<default name="resx" value="256"/>
+	<default name="resy" value="128"/>
+
+<!-- Camera and Rendering Parameters -->
+
+	<integrator type="direct_projective" id="integrator" name="integrator"/>
+	<sensor type="perspective" id="sensor" name="sensor">
+		<integer name="fov" value="100"/>
+		<transform name="to_world">
+			<rotate x="1" angle="-152.06164896377445"/>
+			<rotate y="1" angle="-45.00000466733367"/>
+			<rotate z="1" angle="180.00000500895632"/>
+			<translate value="2.000000 2.000000 1.000000"/>
+		</transform>
+		<film type="hdrfilm" name="film">
+			<integer name="width" value="$resx"/>
+			<integer name="height" value="$resy"/>
+			<rfilter type="box" name="filter"/>
+		</film>
+	</sensor>
+
+<!-- Materials -->
+
+
+<!-- Emitters -->
+
+	<shape type="rectangle" id="light1" name="light1">
+		<transform name="to_world">
+			<matrix value="-0.025000 0.000000 0.000000 0.000000 0.000000 0.025000 0.000000 0.000000 0.000000 0.000000 -0.025000 5.000000 0.000000 0.000000 0.000000 1.000000"/>
+		</transform>
+		<emitter type="area" name="emitter">
+			<rgb value="40000.000000" name="radiance"/>
+		</emitter>
+	</shape>
+	<shape type="rectangle" id="light2" name="light2">
+		<transform name="to_world">
+			<matrix value="0.000000 0.000000 -0.025000 5.000000 0.000000 0.025000 0.000000 0.000000 0.025000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 1.000000"/>
+		</transform>
+		<emitter type="area" name="emitter">
+			<rgb value="40000.000000" name="radiance"/>
+		</emitter>
+	</shape>
+
+<!-- Shapes -->
+
+	<shape type="rectangle" id="wall1" name="wall1">
+		<transform name="to_world">
+			<matrix value="8.000000 0.000000 0.000000 0.000000 0.000000 2.000000 0.000000 0.000000 0.000000 0.000000 2.000000 -5.000000 0.000000 0.000000 0.000000 1.000000"/>
+		</transform>
+	</shape>
+	<shape type="rectangle" id="wall2" name="wall2">
+		<transform name="to_world">
+			<matrix value="0.000000 0.000000 2.000000 -5.000000 0.000000 2.000000 0.000000 0.000000 -8.000000 0.000000 0.000000 0.000000 0.000000 0.000000 0.000000 1.000000"/>
+		</transform>
+	</shape>
+	<shape type="bsplinecurve" id="curve" name="curve">
+		<string name="filename" value="meshes/bsplinecurve_circle.txt"/>
+	</shape>
+
+<!-- Volumes -->
+
+</scene>
